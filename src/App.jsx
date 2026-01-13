@@ -1,13 +1,16 @@
+import "./App.css";
 
-import './App.css'
+import NavBar from "./components/utility/NavBar";
+
+import HomePage from "./pages/Home/homePage";
 
 function App() {
-
   return (
     <>
-    <div className='text-center'>احمد</div>
+      <NavBar />
+      <HomePage />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
