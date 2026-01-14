@@ -1,4 +1,4 @@
-import CategoryContainer from "../../Components/Category/CategoryContainer";
+import CategoryContainer from "../../components/Category/CategoryContainer";
 import Pagination1 from "../../components/utility/Pagination";
 const AllCategoryPage = () => {
   return (

@@ -4,7 +4,7 @@ import AdminSideBar from '../../components/Admin/AdminSideBar'
 // import AdminAllProducts from '../../components/Admin/AdminAllProducts'
 // import Pagination from '../../components/Uitily/Pagination'
 // import AdminOrderDetalis from '../../components/Admin/AdminOrderDetalis'
-import AdminAddBrand from '../../Components/Admin/AdminAddBrand'
+import AdminAddBrand from '../../components/Admin/AdminAddBrand'
 const AdminAddBrandPage = () => {
     return ( 
         <Container >

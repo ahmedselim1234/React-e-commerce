@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { Container, Row, Col } from 'react-bootstrap'
 import CartCheckout from '../../components/Cart/CartCheckout'
 import CartItem from '../../components/Cart/CartItem'
