@@ -1,6 +1,34 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+🛒 E-Commerce React Project
+📌 Project Description
 
-Currently, two official plugins are available:
+This is a simple E-Commerce web application built using React.js.
+The project displays product categories and product cards.
+Currently, all data used in the project is dummy data for testing and UI development purposes.
+No real backend or database is connected yet.
 
+🚀 Technologies Used
+
+React.js
+
+React Router DOM
+
+React Bootstrap
+
+CSS
+
+Dummy JSON Data
+
+🎯 Features
+
+Navigation bar
+
+Home page layout
+
+Categories section
+
+Products section
+
+Responsive design
+
+Page routing
