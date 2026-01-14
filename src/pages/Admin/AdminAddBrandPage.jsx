@@ -6,7 +6,7 @@ import AdminSideBar from '../../components/Admin/AdminSideBar'
 // import AdminOrderDetalis from '../../components/Admin/AdminOrderDetalis'
 import AdminAddBrand from '../../Components/Admin/AdminAddBrand'
 const AdminAddBrandPage = () => {
-    return (
+    return ( 
         <Container >
             <Row className='py-3'>
                 <Col sm="3" xs="2" md="2">
