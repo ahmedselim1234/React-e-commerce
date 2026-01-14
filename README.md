@@ -1,5 +1,5 @@
 
-🛒 E-Commerce React Project
+ E-Commerce React Project
 📌 Project Description
 
 This is a simple E-Commerce web application built using React.js.
