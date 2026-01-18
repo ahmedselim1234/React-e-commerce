@@ -1,4 +1,6 @@
 import "./App.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
 import Footer from "./components/utility/Footer";
 
 import NavBar from "./components/utility/NavBar";
@@ -36,10 +38,25 @@ import UserAddAddressPage from "./pages/User/UserAddAddressPage";
 import UserEditAddressPage from "./pages/User/UserEditAddressPage";
 import UserProfilePage from "./pages/User/UserProfilePage";
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000, // 5 دقائق
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      retry: 1,
+    },
+  },
+});
+
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function App() {
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <BrowserRouter>
+         <ToastContainer />
         <NavBar />
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -78,8 +95,9 @@ function App() {
         </Routes>
         <Footer />
       </BrowserRouter>
-    </>
+    </QueryClientProvider>
   );
 }
 
 export default App;
+  

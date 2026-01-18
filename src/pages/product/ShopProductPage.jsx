@@ -7,7 +7,7 @@ import SideFilter from "../../components/utility/SideFilter";
 
 import CartContainer from "../../components/Products/CartContainer";
 
-import Pagination1 from "../../components/utility/Pagination";
+import Pagination from "../../components/utility/Pagination";
 
 const ShopProductPage = () => {
   return (
@@ -22,9 +22,9 @@ const ShopProductPage = () => {
             <SideFilter />
           </Col>
           <Col sm="10" xs="10" md="11">
-            <CartContainer/>
+            <CartContainer />
           </Col>
-            <Pagination1/>                 
+          <Pagination />
         </Row>
       </Container>
     </div>

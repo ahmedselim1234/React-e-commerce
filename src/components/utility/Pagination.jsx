@@ -1,48 +1,33 @@
-import Pagination from "react-bootstrap/Pagination";
+import React from 'react'
+import ReactPaginate from "react-paginate";
 
-const Pagination1 = ({ currentPage = 1, totalPages = 20, onPageChange }) => {
-  return (
-    <Pagination className="justify-content-center">
+const Pagination = ({ pageCount, onPress }) => {
 
-      {/* First */}
-      <Pagination.First 
-        onClick={() => onPageChange(1)} 
-        disabled={currentPage === 1}
-      />
+    const handlePageClick = (data) => {
 
-      {/* Prev */}
-      <Pagination.Prev 
-        onClick={() => onPageChange(currentPage - 1)} 
-        disabled={currentPage === 1}
-      />
+        onPress(data.selected + 1)
+    };
+    return (
+        <ReactPaginate
+            breakLabel="..."
+            nextLabel="التالى"
+            onPageChange={handlePageClick}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={2}
+            pageCount={pageCount}
+            previousLabel="السابق"
+            containerClassName={"pagination justify-content-center p-3"}
+            pageClassName={"page-item"}
+            pageLinkClassName={"page-link"}
+            previousClassName={"page-item"}
+            nextClassName={"page-item"}
+            previousLinkClassName={"page-link"}
+            nextLinkClassName={"page-link"}
+            breakClassName={"page-item"}
+            breakLinkClassName={"page-link"}
+            activeClassName={"active"}
+        />
+    )
+}
 
-      {/* First Page Number */}
-      <Pagination.Item active={currentPage === 1} onClick={() => onPageChange(1)}>
-        1
-      </Pagination.Item>
-
-      {/* Last Page Number */}
-      <Pagination.Item 
-        active={currentPage === totalPages} 
-        onClick={() => onPageChange(totalPages)}
-      >
-        {totalPages}
-      </Pagination.Item>
-
-      {/* Next */}
-      <Pagination.Next 
-        onClick={() => onPageChange(currentPage + 1)} 
-        disabled={currentPage === totalPages}
-      />
-
-      {/* Last */}
-      <Pagination.Last 
-        onClick={() => onPageChange(totalPages)} 
-        disabled={currentPage === totalPages}
-      />
-
-    </Pagination>
-  );
-};
-
-export default Pagination1;
+export default Pagination

@@ -1,28 +1,117 @@
-import React from 'react'
-import { Col, Row } from 'react-bootstrap'
-import avatar from '../../images/avatar.png'
-const AdminAddCategory = () => {
-    return (
-        <div>
-            <Row className="justify-content-start ">
-                <div className="admin-content-text pb-4">اضافه تصنيف جديد</div>
-                <Col sm="8">
-                    <div className="text-form pb-2">صوره التصنيف</div>
-                    <img src={avatar} alt="" height="100px" width="120px" />
-                    <input
-                        type="text"
-                        className="input-form d-block mt-3 px-3"
-                        placeholder="اسم التصنيف"
-                    />
-                </Col>
-            </Row>
-            <Row>
-                <Col sm="8" className="d-flex justify-content-end ">
-                    <button className="btn-save d-inline mt-2 ">حفظ التعديلات</button>
-                </Col>
-            </Row>
-        </div>
-    )
-}
+import { Col, Row } from "react-bootstrap";
+import avatar from "../../images/avatar.png";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { useAddCategoryMutation } from "../../redux/features/category/categorySlice";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import ToastServerSError from "../../utils/errorHandler";
+import { AddCategorySchema } from "../../utils/validation/createCategoryValidation";
 
-export default AdminAddCategory
+const AdminAddCategory = () => {
+  const [img, setImg] = useState(avatar);
+  // const [serverError,SetServerError]=useState("")
+  const [addCategory, { isLoading }] = useAddCategoryMutation();
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    mode: "onChange",
+    resolver: zodResolver(AddCategorySchema),
+  });
+
+  const onSubmit = async (data) => {
+    console.log(data);
+    try {
+      await addCategory(data).unwrap();
+      toast.success("تمت إضافة التصنيف بنجاح ", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+      reset();
+      setImg(avatar)
+    } catch (err) {
+      ToastServerSError(err);
+    }
+  };
+
+  return (
+    <div>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Row className="justify-content-start">
+          <div className="admin-content-text pb-4">اضافه تصنيف جديد</div>
+
+          <Col sm="8">
+            <div className="text-form pb-2">صوره التصنيف</div>
+
+            {/* Preview + Upload */}
+            <label htmlFor="upload-photo" style={{ cursor: "pointer" }}>
+              <div className="category-preview p-4">
+                <img
+                  src={img || avatar}
+                  alt="category preview"
+                  height="100"
+                  width="120"
+                  loading="lazy"
+                />
+              </div>
+            </label>
+
+            <input
+              type="file"
+              id="upload-photo"
+              accept="image/*"
+              {...register("image", {
+                required: true,
+                onChange: (e) => {
+                  const file = e.target.files[0];
+                  if (file) {
+                    setImg(URL.createObjectURL(file));
+                  }
+                },
+              })}
+              style={{ display: "none" }}
+            />
+            {errors.image && (
+              <span className="error-text">{errors.image.message}</span>
+            )}
+
+            {/* Category Name */}
+            <input
+              type="text"
+              className="input-form d-block mt-3 px-3"
+              placeholder="اسم التصنيف"
+              {...register("name", { required: true })}
+            />
+            {errors.name && (
+              <span className="error-text">{errors.name.message}</span>
+            )}
+          </Col>
+        </Row>
+
+        <Row>
+          <Col sm="8" className="d-flex justify-content-end">
+            <button
+              disabled={isSubmitting}
+              type="submit"
+              className="btn-save d-inline mt-2 p-2"
+            >
+              حفظ التعديلات
+            </button>
+          </Col>
+        </Row>
+      </form>
+      {isLoading && (
+        <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
+          <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-gray-600"></div>
+          جاري الإضافة...
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default AdminAddCategory;

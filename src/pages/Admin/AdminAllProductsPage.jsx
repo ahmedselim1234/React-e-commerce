@@ -1,23 +1,22 @@
-
-import { Container, Row, Col } from 'react-bootstrap'
-import AdminSideBar from '../../components/Admin/AdminSideBar'
-import AdminAllProducts from '../../components/Admin/AdminAllProducts'
-// import Pagination1 from '../../Components/uitily/Pagination'
-import AdminAddProducts from '../../components/Admin/AdminAddProducts'
+import { Container, Row, Col } from "react-bootstrap";
+import AdminSideBar from "../../components/Admin/AdminSideBar";
+import AdminAllProducts from "../../components/Admin/AdminAllProducts";
+// import Pagination from '../../Components/uitily/Pagination'
+import AdminAddProducts from "../../components/Admin/AdminAddProducts";
 const AdminAllProductsPage = () => {
-    return (
-        <Container >
-            <Row className='py-3'>
-                <Col sm="3" xs="2" md="2">
-                    <AdminSideBar />
-                </Col>
+  return (
+    <Container>
+      <Row className="py-3">
+        <Col sm="3" xs="2" md="2">
+          <AdminSideBar />
+        </Col>
 
-                <Col sm="9" xs="10" md="10">
-                     <AdminAddProducts />
-                </Col>
-            </Row>
-        </Container>
-    )
-}
+        <Col sm="9" xs="10" md="10">
+          <AdminAddProducts />
+        </Col>
+      </Row>
+    </Container>
+  );
+};
 
-export default AdminAllProductsPage
+export default AdminAllProductsPage;
