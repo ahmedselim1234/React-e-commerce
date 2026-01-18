@@ -10,7 +10,6 @@ import { AddCategorySchema } from "../../utils/validation/createCategoryValidati
 
 const AdminAddCategory = () => {
   const [img, setImg] = useState(avatar);
-  // const [serverError,SetServerError]=useState("")
   const [addCategory, { isLoading }] = useAddCategoryMutation();
 
   const {

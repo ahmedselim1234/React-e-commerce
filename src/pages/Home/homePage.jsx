@@ -2,7 +2,8 @@ import Silder from "../../components/Home/slider";
 import HomeCategory from "../../components/Home/HomeCategory";
 import CartContainer from "../../components/Products/CartContainer";
 import DiscountSection from "../../components/Home/DiscountSection";
-import BrandContainer from "../../components/brand/BrandContainer";
+
+import BrandSection from "../../components/Home/BrandSection";
 
 export default function HomePage() {
   return (
@@ -20,7 +21,7 @@ export default function HomePage() {
         pathText={"/products"}
       />
       <DiscountSection />
-      <BrandContainer />
+      <BrandSection />
     </div>
   );
 }

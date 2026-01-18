@@ -1,10 +1,7 @@
 import { Container, Row } from "react-bootstrap";
 import CategoryCard from "./CategoryCard";
 
-
-const CategoryContainer = ({data}) => {
-
-
+const CategoryContainer = ({ data }) => {
   return (
     <Container>
       <div className="admin-content-text mt-2 ">كل التصنيفات</div>
