@@ -4,14 +4,14 @@ export const categoryApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     //getValunteers
     getCategory: builder.query({
-      query: ({ limit, page }) => {
+      query: ({ limit = 10, page = 1 } = {}) => {
         return {
-          url: `/categories?limit=
-          ${limit}&page=${page}`,
+          url: `/categories?limit=${limit}&page=${page}`,
           method: "GET",
         };
       },
     }),
+
     //add category
     addCategory: builder.mutation({
       query: ({ name, image }) => {
