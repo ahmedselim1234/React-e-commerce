@@ -2,7 +2,7 @@ import { Card, Col } from "react-bootstrap";
 import favoff from "../../images/fav-off.png";
 import rate from "../../images/rate.png";
 import { Link } from "react-router-dom";
-const ProductCard = ({img}) => {
+const ProductCard = ({img,description,price,rating}) => {
   return (
     //grid change with screen size
     <Col xs="6" sm="6" md="4" lg="3" className="d-flex">
@@ -35,7 +35,7 @@ const ProductCard = ({img}) => {
         <Card.Body>
           <Card.Title>
             <div className="card-title">
-              سود كربون ساعة يد ذكية بيب إس أسود كربون{" "}
+             {description}
             </div>
           </Card.Title>
           <Card.Text>
@@ -48,10 +48,10 @@ const ProductCard = ({img}) => {
                   height="16px"
                   width="16px"
                 />
-                <div className="card-rate mx-2">4.5</div>
+                <div className="card-rate mx-2">{rating}</div>
               </div>
               <div className="d-flex">
-                <div className="card-price">880</div>
+                <div className="card-price">{price}</div>
                 <div className="card-currency mx-1">جنيه</div>
               </div>
             </div>

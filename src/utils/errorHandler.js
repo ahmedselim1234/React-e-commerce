@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 
 const ToastServerSError = (err) => {
   if (err.status === 409) {
-    toast.error("التصنيف موجود بالفعل");
+    toast.error(" موجود بالفعل");
   } else if (err.status === 400) {
     toast.error(err.data?.message || "بيانات غير صحيحة");
   } else if (err.status === 500) {

@@ -4,9 +4,17 @@ export const categoryApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     //getValunteers
     getCategory: builder.query({
-      query: ({ limit = 10, page = 1 } = {}) => {
+      query: ({ limit = 50, page = 1 } = {}) => {
         return {
           url: `/categories?limit=${limit}&page=${page}`,
+          method: "GET",
+        };
+      },
+    }),
+    getSubForSpeceficCategory: builder.query({
+      query: ({catId}) => {
+        return {
+          url: `/categories/${catId}/subcategories`,
           method: "GET",
         };
       },
@@ -31,4 +39,4 @@ export const categoryApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetCategoryQuery, useAddCategoryMutation } = categoryApiSlice;
+export const { useGetCategoryQuery, useAddCategoryMutation,useGetSubForSpeceficCategoryQuery } = categoryApiSlice;
