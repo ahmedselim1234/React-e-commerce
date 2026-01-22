@@ -1,6 +1,17 @@
 import { toast } from "react-toastify";
 
 const ToastServerSError = (err) => {
+  if (err.data?.errors && Array.isArray(err.data.errors)) {
+    err.data.errors.forEach((error) => {
+      toast.error(error.msg || "خطأ في البيانات");
+    });
+    return;
+  }
+
+  if (err.data?.message) {
+    toast.error(err.data.message);
+    return;
+  }
   if (err.status === 409) {
     toast.error(" موجود بالفعل");
   } else if (err.status === 400) {

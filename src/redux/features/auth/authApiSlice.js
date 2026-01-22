@@ -2,9 +2,19 @@ import { apiSlice } from "../../app/api/apiSlice";
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+
+
     login: builder.mutation({
       query: (credintails) => ({
         url: "auth/login",
+        method: "POST",
+        body: { ...credintails },
+      }),
+    }),
+
+      signup: builder.mutation({
+      query: (credintails) => ({
+        url: "auth/signup",
         method: "POST",
         body: { ...credintails },
       }),
@@ -19,4 +29,4 @@ export const authApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useLoginMutation,useLogoutMutation } = authApiSlice;
+export const { useLoginMutation,useLogoutMutation ,useSignupMutation} = authApiSlice;
