@@ -56,7 +56,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-         <ToastContainer />
+        <ToastContainer />
         <NavBar />
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -100,4 +100,3 @@ function App() {
 }
 
 export default App;
-  

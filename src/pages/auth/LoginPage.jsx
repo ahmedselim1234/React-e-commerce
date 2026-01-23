@@ -1,5 +1,5 @@
 import { Container, Row, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useLoginMutation } from "../../redux/features/auth/authApiSlice";
 import { useForm } from "react-hook-form";
@@ -7,12 +7,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import ToastServerSError from "../../utils/errorHandler";
 import { loginValidation } from "../../utils/validation/login";
 import { toast } from "react-toastify";
-const LoginPage = () => {
-  const [login, { data: response }] = useLoginMutation({});
+import { setCredentials } from "../../redux/features/auth/authSlice";
 
-  if (response?.accessToken) {
-    localStorage.setItem("token", response?.accessToken);
-  }
+import { useDispatch } from "react-redux";
+const LoginPage = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [login] = useLoginMutation({});
 
   const {
     handleSubmit,
@@ -27,14 +29,30 @@ const LoginPage = () => {
   const onSubmit = async (data) => {
     console.log(data);
     try {
-      await login(data).unwrap();
-      toast.success("تمت تسجبل الدخول بنجاح ", {
+      const result = await login(data).unwrap();
+
+      toast.success("تمت عمل  الحساب بنجاح ", {
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 1000,
       });
+
+      dispatch(
+        setCredentials({
+          user: result?.user,
+          token: result?.accessToken,
+        }),
+      );
+
+      
+
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
 
       reset();
     } catch (err) {
+      localStorage.setItem("token", "");
+      localStorage.setItem("user", "");
       ToastServerSError(err);
     }
   };
@@ -43,7 +61,7 @@ const LoginPage = () => {
     <Container style={{ minHeight: "680px" }}>
       <Row className="py-5 d-flex justify-content-center ">
         <Col sm="12" className="d-flex flex-column ">
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
             <label className="mx-auto title-login">تسجيل الدخول</label>
             <input
               placeholder="الايميل..."
@@ -78,17 +96,6 @@ const LoginPage = () => {
         </Col>
 
         <label className="mx-auto my-4">
-          <Link to="/admin/allproducts" style={{ textDecoration: "none" }}>
-            <span style={{ cursor: "pointer" }} className="text-danger">
-              الدخول ادمن
-            </span>
-          </Link>
-
-          <Link to="/user/allorders" style={{ textDecoration: "none" }}>
-            <span style={{ cursor: "pointer" }} className="text-danger mx-3">
-              الدخول مستخدم
-            </span>
-          </Link>
         </label>
       </Row>
     </Container>

@@ -7,12 +7,20 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import ToastServerSError from "../../utils/errorHandler";
 import { signupValidation } from "../../utils/validation/signup";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../../redux/features/auth/authSlice";
+
 
 const RegisterPage = () => {
+   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [signup, { data: response }] = useSignupMutation({});
 
-  if (response?.accessToken ) {
+  if (response?.accessToken) {
     localStorage.setItem("token", response?.accessToken);
+    localStorage.setItem("user", JSON.stringify(response?.user));
   }
 
   const {
@@ -26,16 +34,30 @@ const RegisterPage = () => {
   });
 
   const onSubmit = async (data) => {
-
     try {
-      await signup(data).unwrap();
+    const result =  await signup(data).unwrap();
+
       toast.success("تمت عمل  الحساب بنجاح ", {
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 1000,
       });
+
+        dispatch(
+              setCredentials({
+                user: result?.user,
+                token: result?.accessToken,
+              }),
+            );
+      
+
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
 
       reset();
     } catch (err) {
+      localStorage.setItem("token", "");
+      localStorage.setItem("user", "");
       ToastServerSError(err);
     }
   };
@@ -45,7 +67,7 @@ const RegisterPage = () => {
       <Row className="py-5 d-flex justify-content-center hieght-search">
         <Col sm="12" className="d-flex flex-column ">
           <label className="mx-auto title-login">تسجيل حساب جديد</label>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
             <input
               placeholder="اسم المستخدم..."
               type="text"

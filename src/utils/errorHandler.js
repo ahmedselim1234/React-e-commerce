@@ -12,6 +12,10 @@ const ToastServerSError = (err) => {
     toast.error(err.data.message);
     return;
   }
+  if (err.message) {
+    toast.error(err.message);
+    return;
+  }
   if (err.status === 409) {
     toast.error(" موجود بالفعل");
   } else if (err.status === 400) {
