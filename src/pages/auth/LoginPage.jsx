@@ -1,20 +1,19 @@
 import { Container, Row, Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-
-import { useLoginMutation } from "../../redux/features/auth/authApiSlice";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+
+import { useLoginMutation } from "../../redux/features/auth/authApiSlice";
+import { setCredentials } from "../../redux/features/auth/authSlice";
 import ToastServerSError from "../../utils/errorHandler";
 import { loginValidation } from "../../utils/validation/login";
-import { toast } from "react-toastify";
-import { setCredentials } from "../../redux/features/auth/authSlice";
 
-import { useDispatch } from "react-redux";
 const LoginPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const [login] = useLoginMutation({});
+  const [login] = useLoginMutation();
 
   const {
     handleSubmit,
@@ -27,13 +26,12 @@ const LoginPage = () => {
   });
 
   const onSubmit = async (data) => {
-    console.log(data);
     try {
       const result = await login(data).unwrap();
 
-      toast.success("تمت عمل  الحساب بنجاح ", {
+      toast.success("تم تسجيل الدخول بنجاح", {
         position: "top-right",
-        autoClose: 1000,
+        autoClose: 1500,
       });
 
       dispatch(
@@ -43,63 +41,75 @@ const LoginPage = () => {
         }),
       );
 
-      
-
-      setTimeout(() => {
-        navigate("/");
-      }, 1000);
-
       reset();
+      setTimeout(() => navigate("/"), 1000);
     } catch (err) {
-      localStorage.setItem("token", "");
-      localStorage.setItem("user", "");
+      localStorage.clear();
       ToastServerSError(err);
     }
   };
 
-  return (
-    <Container style={{ minHeight: "680px" }}>
-      <Row className="py-5 d-flex justify-content-center ">
-        <Col sm="12" className="d-flex flex-column ">
-          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
-            <label className="mx-auto title-login">تسجيل الدخول</label>
-            <input
-              placeholder="الايميل..."
-              type="text"
-              className="user-input my-3 text-center mx-auto"
-              {...register("email")}
-            />
-            {errors.email && (
-              <span className="error-text">{errors.email.message}</span>
-            )}
-            <input
-              placeholder="كلمه السر..."
-              type="password"
-              className="user-input text-center mx-auto"
-              {...register("password")}
-            />
-            {errors.password && (
-              <span className="error-text">{errors.password.message}</span>
-            )}
-            <button type="submit" className="btn-login mx-auto mt-4">
-              تسجيل الدخول
-            </button>
-          </form>
-          <label className="mx-auto my-4">
-            ليس لديك حساب ؟{" "}
-            <Link to="/register" style={{ textDecoration: "none" }}>
-              <span style={{ cursor: "pointer" }} className="text-danger">
-                اضغط هنا
-              </span>
-            </Link>
-          </label>
-        </Col>
 
-        <label className="mx-auto my-4">
-        </label>
-      </Row>
-    </Container>
-  );
+  return (
+  <Container fluid className="min-vh-100">
+    <Row className="justify-content-center align-items-center min-vh-100">
+      <Col sm="10" md="6" lg="4">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="d-flex flex-column p-4 shadow rounded bg-white"
+        >
+          <h4 className="text-center mb-4 title-login">
+            تسجيل الدخول
+          </h4>
+
+          <input
+            type="email"
+            placeholder="البريد الإلكتروني"
+            className="user-input text-center mb-2"
+            {...register("email")}
+          />
+          {errors.email && (
+            <span className="error-text text-center mb-2">
+              {errors.email.message}
+            </span>
+          )}
+
+          <input
+            type="password"
+            placeholder="كلمة المرور"
+            className="user-input text-center mb-2"
+            {...register("password")}
+          />
+          {errors.password && (
+            <span className="error-text text-center mb-2">
+              {errors.password.message}
+            </span>
+          )}
+
+          <button type="submit" className="btn-login mt-3">
+            تسجيل الدخول
+          </button>
+
+          <Link
+            to="/forgetpassword"
+            className="text-center text-danger mt-3"
+            style={{ textDecoration: "none" }}
+          >
+            نسيت كلمة المرور؟
+          </Link>
+
+          <div className="text-center mt-3">
+            ليس لديك حساب؟{" "}
+            <Link to="/register" className="text-danger">
+              إنشاء حساب
+            </Link>
+          </div>
+        </form>
+      </Col>
+    </Row>
+  </Container>
+);
+
 };
 
 export default LoginPage;

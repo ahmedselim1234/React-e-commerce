@@ -13,6 +13,7 @@ const NavBar = () => {
   const menuRef = useRef(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  console.log(open);
 
   useEffect(() => {
     const handler = (e) => {
@@ -24,9 +25,9 @@ const NavBar = () => {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-   const handleLogout = () => {
+  const handleLogout = () => {
     dispatch(logout());
-      navigate("/");
+    navigate("/");
   };
 
   return (
@@ -60,10 +61,18 @@ const NavBar = () => {
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu align="end">
-                  <Dropdown.Item href="/user/profile">الملف الشخصي</Dropdown.Item>
+
+                  <Dropdown.Item href="/user/profile">
+                    الملف الشخصي
+                  </Dropdown.Item>
                   <Dropdown.Item href="/orders">طلباتي</Dropdown.Item>
                   <Dropdown.Divider />
-                  <Dropdown.Item onClick={handleLogout}>تسجيل الخروج</Dropdown.Item>
+                  <Dropdown.Item onClick={handleLogout}>
+                    تسجيل الخروج
+                  </Dropdown.Item>
+                  {user?.role=='admin'&&
+                   <Dropdown.Item href="/admin/dashboard">الداشبورد</Dropdown.Item>
+                  }
                 </Dropdown.Menu>
               </Dropdown>
             ) : (
