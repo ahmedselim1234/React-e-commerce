@@ -1,7 +1,7 @@
 import UnopDropdown from "unop-react-dropdown";
 import sort from "../../images/sort.png";
 
-const OrderBy = ({ title }) => {
+const OrderBy = ({ title, onSort }) => {
   const handler = () => {};
   return (
     <div className="d-flex justify-content-between pt-3 px-2">
@@ -27,12 +27,28 @@ const OrderBy = ({ title }) => {
           hover
         >
           <div className="card-filter">
-            <div className="border-bottom card-filter-item">الاكثر مبيعا</div>
-            <div className="border-bottom card-filter-item">الاعلي تقييما</div>
-            <div className="border-bottom card-filter-item">
+            <div
+              onClick={() => onSort("-sold")}
+              className="border-bottom card-filter-item"
+            >
+              الاكثر مبيعا
+            </div>
+
+            <div
+              onClick={() => onSort("-Averagerating")}
+              className="border-bottom card-filter-item"
+            >
+              الاعلي تقييما
+            </div>
+            <div
+              onClick={() => onSort("price")}
+              className="border-bottom card-filter-item"
+            >
               السعر من الاقل للاعلي
             </div>
-            <div className=" card-filter-item">السعر من الاعلي للاقل</div>
+            <div onClick={() => onSort("-price")} className=" card-filter-item">
+              السعر من الاعلي للاقل
+            </div>
           </div>
         </UnopDropdown>
       </div>

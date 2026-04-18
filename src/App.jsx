@@ -5,7 +5,7 @@ import Footer from "./components/utility/Footer";
 
 import NavBar from "./components/utility/NavBar";
 
-import HomePage from "./pages/Home/homePage";
+import HomePage from "./pages/Home/HomePage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import LoginPage from "./pages/auth/LoginPage";
@@ -58,13 +58,14 @@ import ResetPasswordPage from "./pages/auth/ResetPassword";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import AdminRoute from "./components/auth/AdminRoute";
 import UserRoute from "./components/auth/UserRoute";
+import AdminEditProductsPage from "./pages/Admin/AdminEditProductsPage";
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <ToastContainer />
-        <NavBar />
+        {/* <NavBar /> */}
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
@@ -100,6 +101,12 @@ function App() {
                 path="/admin/addproduct"
                 element={<AdminAddProductsPage />}
               />
+
+              <Route
+                path="/admin/editproduct/:id"
+                element={<AdminEditProductsPage />}
+              />
+
               <Route
                 path="/admin/orders/:id"
                 element={<AdminOrderDetalisPage />}

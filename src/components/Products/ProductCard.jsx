@@ -1,10 +1,10 @@
 import { Card, Col } from "react-bootstrap";
-import favoff from "../../images/fav-off.png";
 import rate from "../../images/rate.png";
 import { Link } from "react-router-dom";
-const ProductCard = ({img,description,price,rating}) => {
+const ProductCard = ({img,title,price,rating,id}) => {
+
   return (
-    //grid change with screen size
+
     <Col xs="6" sm="6" md="4" lg="3" className="d-flex">
       <Card
         className="my-2"
@@ -17,13 +17,13 @@ const ProductCard = ({img,description,price,rating}) => {
           boxShadow: "0 2px 2px 0 rgba(151,151,151,0.5)",
         }}
       >
-        <Link to="/products/:id" style={{ textDecoration: "none" }}>
+        <Link to={`/products/${id}` } style={{ textDecoration: "none" }}>
           <Card.Img style={{ height: "228px", width: "100%" }} src={img} />
         </Link>
         
         <div className="d-flex justify-content-end mx-2">
           <img
-            src={favoff}
+            src={img}
             alt=""
             className="text-center"
             style={{
@@ -35,7 +35,7 @@ const ProductCard = ({img,description,price,rating}) => {
         <Card.Body>
           <Card.Title>
             <div className="card-title">
-             {description}
+             {title}
             </div>
           </Card.Title>
           <Card.Text>

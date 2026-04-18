@@ -27,6 +27,7 @@ const initialState = {
 const authSlice = createSlice({
   name: "auth",
   initialState,
+  //reducer function
   reducers: {
     setCredentials: (state, action) => {
       state.user = action.payload.user;
@@ -52,6 +53,10 @@ const authSlice = createSlice({
     },
   },
 });
+
+// في authSlice.js
+export const selectCurrentUser = (state) => state.auth.user;
+export const selectCurrentToken = (state) => state.auth.token;
 
 export const { setCredentials, logout } = authSlice.actions;
 export default authSlice.reducer;

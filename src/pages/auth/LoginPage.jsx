@@ -9,11 +9,14 @@ import { useLoginMutation } from "../../redux/features/auth/authApiSlice";
 import { setCredentials } from "../../redux/features/auth/authSlice";
 import ToastServerSError from "../../utils/errorHandler";
 import { loginValidation } from "../../utils/validation/login";
+import {  useState } from "react";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [login] = useLoginMutation();
+
+  const [count, setCount] = useState(0);
 
   const {
     handleSubmit,
@@ -21,7 +24,7 @@ const LoginPage = () => {
     reset,
     formState: { errors },
   } = useForm({
-    mode: "onSubmit",
+    mode: "onChange",
     resolver: zodResolver(loginValidation()),
   });
 
@@ -51,65 +54,64 @@ const LoginPage = () => {
 
 
   return (
-  <Container fluid className="min-vh-100">
-    <Row className="justify-content-center align-items-center min-vh-100">
-      <Col sm="10" md="6" lg="4">
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="d-flex flex-column p-4 shadow rounded bg-white"
-        >
-          <h4 className="text-center mb-4 title-login">
-            تسجيل الدخول
-          </h4>
-
-          <input
-            type="email"
-            placeholder="البريد الإلكتروني"
-            className="user-input text-center mb-2"
-            {...register("email")}
-          />
-          {errors.email && (
-            <span className="error-text text-center mb-2">
-              {errors.email.message}
-            </span>
-          )}
-
-          <input
-            type="password"
-            placeholder="كلمة المرور"
-            className="user-input text-center mb-2"
-            {...register("password")}
-          />
-          {errors.password && (
-            <span className="error-text text-center mb-2">
-              {errors.password.message}
-            </span>
-          )}
-
-          <button type="submit" className="btn-login mt-3">
-            تسجيل الدخول
-          </button>
-
-          <Link
-            to="/forgetpassword"
-            className="text-center text-danger mt-3"
-            style={{ textDecoration: "none" }}
+    <Container fluid className="min-vh-100">
+      <button onClick={() => setCount(count + 1)}>+</button>
+      <div>{count}</div>
+      <Row className="justify-content-center align-items-center min-vh-100">
+        <Col sm="10" md="6" lg="4">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="d-flex flex-column p-4 shadow rounded bg-white"
           >
-            نسيت كلمة المرور؟
-          </Link>
+            <h4 className="text-center mb-4 title-login">تسجيل الدخول</h4>
 
-          <div className="text-center mt-3">
-            ليس لديك حساب؟{" "}
-            <Link to="/register" className="text-danger">
-              إنشاء حساب
+            <input
+              type="email"
+              placeholder="البريد الإلكتروني"
+              className="user-input text-center mb-2"
+              {...register("email")}
+            />
+            {errors.email && (
+              <span className="error-text text-center mb-2">
+                {errors.email.message}
+              </span>
+            )}
+
+            <input
+              type="password"
+              placeholder="كلمة المرور"
+              className="user-input text-center mb-2"
+              {...register("password")}
+            />
+            {errors.password && (
+              <span className="error-text text-center mb-2">
+                {errors.password.message}
+              </span>
+            )}
+
+            <button type="submit" className="btn-login mt-3">
+              تسجيل الدخول
+            </button>
+
+            <Link
+              to="/forgetpassword"
+              className="text-center text-danger mt-3"
+              style={{ textDecoration: "none" }}
+            >
+              نسيت كلمة المرور؟
             </Link>
-          </div>
-        </form>
-      </Col>
-    </Row>
-  </Container>
-);
 
+            <div className="text-center mt-3">
+              ليس لديك حساب؟{" "}
+              <Link to="/register" className="text-danger">
+                إنشاء حساب
+              </Link>
+            </div>
+          </form>
+        </Col>
+      </Row>
+    </Container>
+  );
 };
 
 export default LoginPage;

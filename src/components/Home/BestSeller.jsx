@@ -1,6 +1,3 @@
-
-
-
 import { Container, Row } from "react-bootstrap";
 import { useGetProductsByFilterQuery } from "../../redux/features/product/productSlice";
 import ProductCard from "../Products/ProductCard";
@@ -10,7 +7,6 @@ const BestSeller = () => {
   const { data, isError, isLoading } = useGetProductsByFilterQuery({
     sort: "-sold",
   });
-
 
   const products = data?.data || [];
 
@@ -28,8 +24,9 @@ const BestSeller = () => {
       <Row className="my-2 d-flex justify-content-between">
         {products.slice(0, 4).map((prod) => (
           <ProductCard
+            id={prod._id}
             key={prod._id}
-            description={prod.description}
+            title={prod.title}
             price={prod.price}
             rating={prod.ratingsQuantity}
             img={prod.imageCover}

@@ -10,30 +10,16 @@ const ACCEPTED_IMAGE_TYPES = [
 
 export const AddProductSchema = z
   .object({
-    /* =======================
-       اسم المنتج
-    ======================== */
     title: z.string().min(3, "اسم المنتج يجب أن لا يقل عن ثلاثة أحرف").trim(),
-
-    /* =======================
-       وصف المنتج
-    ======================== */
     description: z
       .string()
       .min(10, "وصف المنتج يجب أن لا يقل عن عشرة أحرف")
       .trim(),
-
-    /* =======================
-       التصنيف الرئيسي
-    ======================== */
     category: z
       .string()
       .min(1, "يجب اختيار تصنيف رئيسي")
       .regex(/^[0-9a-fA-F]{24}$/, "التصنيف غير صالح"),
 
-    /* =======================
-       الكمية
-    ======================== */
     quantity: z
       .any()
       .refine(
@@ -51,22 +37,11 @@ export const AddProductSchema = z
       .min(1, "يجب اختيار ماركة")
       .regex(/^[0-9a-fA-F]{24}$/, "الماركة غير صالحة"),
 
-    /* =======================
-       التصنيفات الفرعية
-    ======================== */
     subcategory: z.array(z.string()).optional(),
-
-    /* =======================
-       الالوان 
-    ======================== */
     colors: z
       .array(z.string().regex(/^#[0-9A-Fa-f]{6}$/, "صيغة اللون غير صحيحة"))
       .min(1, "يجب اختيار لون واحد على الأقل")
       .max(10, "الحد الأقصى 10 ألوان"),
-
-    /* =======================
-       سعر المنتج
-    ======================== */
     price: z.coerce
       .number({
         required_error: "سعر المنتج مطلوب",
@@ -74,9 +49,6 @@ export const AddProductSchema = z
       })
       .min(1, "سعر المنتج يجب أن يكون أكبر من صفر"),
 
-    /* =======================
-       السعر بعد الخصم
-    ======================== */
     priceAfterDiscount: z.coerce
       .number({
         required_error: "السعر بعد الخصم مطلوب",
@@ -84,9 +56,6 @@ export const AddProductSchema = z
       })
       .min(1, "السعر بعد الخصم يجب أن يكون أكبر من صفر"),
 
-    /* =======================
-       صورة الغلاف
-    ======================== */
     imageCover: z
       .any()
       .refine((files) => files?.length > 0, "صورة الغلاف مطلوبة")
@@ -99,9 +68,6 @@ export const AddProductSchema = z
         "نوع الملف غير مدعوم. استخدم JPG أو PNG أو WEBP",
       ),
 
-    /* =======================
-       صور إضافية
-    ======================== */
     availableImages: z.any().optional(),
   })
   .refine((data) => data.priceAfterDiscount < data.price, {
@@ -109,3 +75,89 @@ export const AddProductSchema = z
     path: ["priceAfterDiscount"],
   });
 
+export const EditProductSchema = z
+  .object({
+    title: z
+      .string()
+      .min(3, "اسم المنتج يجب أن لا يقل عن ثلاثة أحرف")
+      .trim()
+      .optional(),
+    description: z
+      .string()
+      .min(10, "وصف المنتج يجب أن لا يقل عن عشرة أحرف")
+      .trim()
+      .optional(),
+    category: z
+      .string()
+      .regex(/^[0-9a-fA-F]{24}$/, "التصنيف غير صالح")
+      .optional(),
+    quantity: z
+      .any()
+      .refine(
+        (val) =>
+          val === "" ||
+          val === null ||
+          val === undefined ||
+          !isNaN(Number(val)),
+        "كمية المنتج يجب أن تكون رقم",
+      )
+      .refine(
+        (val) =>
+          val === "" || val === null || val === undefined || Number(val) > 0,
+        "كمية المنتج يجب أن تكون أكبر من صفر",
+      )
+      .optional(),
+    brand: z
+  .union([
+    z.string().regex(/^[0-9a-fA-F]{24}$/),
+    z.literal(""),
+  ])
+  .optional()
+  .transform(val => (val === "" ? undefined : val)),
+
+    subcategory: z.array(z.string()).optional(),
+    colors: z
+      .array(z.string().regex(/^#[0-9A-Fa-f]{6}$/, "صيغة اللون غير صحيحة"))
+      .min(1, "يجب اختيار لون واحد على الأقل")
+      .max(10, "الحد الأقصى 10 ألوان")
+      .optional(),
+    price: z.coerce
+      .number({
+        invalid_type_error: "سعر المنتج يجب أن يكون رقم",
+      })
+      .min(1, "سعر المنتج يجب أن يكون أكبر من صفر")
+      .optional(),
+    priceAfterDiscount: z.coerce
+      .number({
+        invalid_type_error: "السعر بعد الخصم يجب أن يكون رقم",
+      })
+      .min(1, "السعر بعد الخصم يجب أن يكون أكبر من صفر")
+      .optional(),
+    imageCover: z.any().optional(),
+    availableImages: z.any().optional(),
+  })
+  .refine(
+    (data) => {
+      if (data.price && data.priceAfterDiscount) {
+        return data.priceAfterDiscount < data.price;
+      }
+      return true;
+    },
+    {
+      message: "السعر بعد الخصم يجب أن يكون أقل من السعر الأصلي",
+      path: ["priceAfterDiscount"],
+    },
+  )
+  .refine(
+    (data) => {
+      // التحقق من وجود حقل واحد على الأقل للتحديث
+      const hasAtLeastOneField = Object.values(data).some(
+        (value) => value !== undefined && value !== null && value !== "",
+      );
+      return hasAtLeastOneField;
+    },
+    {
+      message: "يجب تعديل حقل واحد على الأقل",
+      path: ["title"], // يمكن تغييرها لأي حقل
+    },
+  );

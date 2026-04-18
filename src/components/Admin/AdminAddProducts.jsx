@@ -47,7 +47,7 @@ const AdminAddProducts = () => {
     reset,
     formState: { errors },
   } = useForm({
-    mode: "onSubmit",
+    mode: "onChange",
     resolver: zodResolver(AddProductSchema),
     defaultValues: {
       colors: [],

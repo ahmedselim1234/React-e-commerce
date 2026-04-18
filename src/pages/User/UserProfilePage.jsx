@@ -2,7 +2,11 @@
 import { Container, Row, Col } from 'react-bootstrap'
 import UserSideBar from '../../components/User/UserSideBar'
 import UserProfile from '../../components/User/UserProfile'
+
+
 const UserProfilePage = () => {
+
+  
     return (
         <Container >
             <Row className='py-3'>

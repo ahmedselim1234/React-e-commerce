@@ -11,6 +11,7 @@ export const brandApiSlice = apiSlice.injectEndpoints({
           method: "GET",
         };
       },
+      keepUnusedDataFor:120
     }),
     //add category
     addBrand: builder.mutation({

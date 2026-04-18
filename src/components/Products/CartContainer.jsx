@@ -1,24 +1,29 @@
 import { Container, Row } from "react-bootstrap";
 import SubTiltle from "../utility/subTitle";
 import ProductCard from "./ProductCard";
-import prod1 from "../../images/prod1.png";
-import prod2 from "../../images/mobile.png";
-import prod3 from "../../images/mobile1.png";
-import prod4 from "../../images/mobile2.png";
+import { useLatestProductsQuery } from "../../redux/features/product/productSlice";
 
 const CartContainer = ({ title, btntitle, pathText }) => {
+  const { data,isLoading} = useLatestProductsQuery();
+  const latestProducts = data?.data;
+if(isLoading){
+   return (
+  <>
+  <div>loading....</div>
+  </>
+ )
+}
   return (
- <>
-    <Container>
-      <SubTiltle title={title} btntitle={btntitle} pathText={pathText} />
-      <Row className="my-2 d-flex justify-content-between">
-        <ProductCard img={prod1} />
-        <ProductCard img={prod2} />
-        <ProductCard img={prod3} />
-        <ProductCard img={prod4} />
-      </Row>
-    </Container>
- </>
+    <>
+      <Container>
+        <SubTiltle title={title} btntitle={btntitle} pathText={pathText} />
+        <Row className="my-2 d-flex justify-content-between">
+          {latestProducts?.map((prod) => (
+            <ProductCard id={prod._id} key={prod._id} img={prod.imageCover} />
+          ))}
+        </Row>
+      </Container>
+    </>
   );
 };
 
