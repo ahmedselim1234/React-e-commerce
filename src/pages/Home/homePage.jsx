@@ -6,27 +6,27 @@ import BrandContainer from "../../components/brand/BrandContainer";
 import { dummyProducts } from "../../data/dummyData";
 
 export default function HomePage() {
+  const bestsellers = [...dummyProducts].sort((a, b) => b.sold - a.sold).slice(0, 4);
+  const latest = [...dummyProducts].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 4);
+
   return (
     <div className="bg-background min-h-screen pb-10">
       <Silder />
       <HomeCategory />
       <CartContainer
-        title={"الأكثر مبيعاً"}
-        btntitle={"المزيد"}
-        pathText={"/products"}
-        products={dummyProducts.slice(0, 4)}
+        title="الأكثر مبيعاً"
+        btntitle="عرض الكل"
+        pathText="/products?sort=bestseller"
+        products={bestsellers}
       />
       <DiscountSection />
       <CartContainer
-        title={"أحدث المنتجات"}
-        btntitle={"المزيد"}
-        pathText={"/products"}
-        products={dummyProducts.slice(0, 4).reverse()}
+        title="أحدث المنتجات"
+        btntitle="عرض الكل"
+        pathText="/products?sort=newest"
+        products={latest}
       />
-      {/* Dimmed out older sections until they are replaced */}
-      <div className="opacity-50 pointer-events-none grayscale">
-        <BrandContainer />
-      </div>
+      <BrandContainer />
     </div>
   );
 }

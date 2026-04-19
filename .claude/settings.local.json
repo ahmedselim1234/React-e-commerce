@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(wc -l /d/portofolio-projects/E-commerce-react/src/**/*.jsx /d/portofolio-projects/E-commerce-react/src/**/*.js 2>/dev/null | tail -1)",
+      "Bash(cd \"D:\\\\portofolio-projects\\\\E-commerce-react\" && npm run build 2>&1 | tail -50)"
+    ]
+  }
+}
