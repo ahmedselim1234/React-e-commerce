@@ -1,60 +1,55 @@
-import React from 'react'
-import { Col,Row } from 'react-bootstrap'
-import mobile from '../../images/mobile.png'
-import deleteicon from '../../images/delete.png'
-const CartItem = () => {
+import { Link } from 'react-router-dom';
+import { Trash2, Minus, Plus } from 'lucide-react';
+
+const CartItem = ({ item }) => {
     return (
-        <Col xs="12" className="cart-item-body my-2 d-flex px-2">
-        <img width="160px" height="197px" src={mobile} alt="" />
-        <div className="w-100">
-          <Row className="justify-content-between">
-            <Col sm="12" className=" d-flex flex-row justify-content-between">
-              <div className="d-inline pt-2 cat-text">الالكترونيات</div>
-              <div className="d-flex pt-2 " style={{ cursor: "pointer" }}>
-                <img src={deleteicon} alt="" width="20px" height="24px" />
-                <div className="cat-text d-inline me-2">ازاله</div>
-              </div>
-            </Col>
-          </Row>
-          <Row className="justify-content-center mt-2">
-            <Col sm="12" className=" d-flex flex-row justify-content-start">
-              <div className="d-inline pt-2 cat-title">
-                آيفون XR بذاكرة سعة 128 جيجابايت ويدعم تقنية 4G LTE مع تطبيق فيس
-              
-              </div>
-              <div className="d-inline pt-2 cat-rate me-2">4.5</div>
-            </Col>
-          </Row>
-          <Row>
-            <Col sm="12" className="mt-1">
-              <div className="cat-text d-inline">الماركة :</div>
-              <div className="barnd-text d-inline mx-1">ابل </div>
-            </Col>
-          </Row>
-          <Row>
-            <Col sm="12" className="mt-1 d-flex">
-              <div
-                className="color ms-2 border"
-                style={{ backgroundColor: "#E52C2C" }}></div>
-            </Col>
-          </Row>
-  
-          <Row className="justify-content-between">
-            <Col sm="12" className=" d-flex flex-row justify-content-between">
-              <div className="d-inline pt-2 d-flex">
-                <div className="cat-text  d-inline">الكميه</div>
-                <input
-                  className="mx-2 "
-                  type="number"
-                  style={{ width: "40px", height: "25px" }}
-                />
-              </div>
-              <div className="d-inline pt-2 barnd-text">٣٠٠٠ جنية</div>
-            </Col>
-          </Row>
+        <div className="bg-white rounded-3xl p-4 sm:p-6 mb-4 shadow-sm border border-gray-100 flex flex-col sm:flex-row gap-6 hover:shadow-md transition-shadow relative group" dir="rtl">
+            <button className="absolute top-4 left-4 p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-colors">
+                <Trash2 size={20} />
+            </button>
+            
+            <div className="w-full sm:w-32 h-32 flex-shrink-0 bg-gray-50 rounded-2xl flex items-center justify-center p-4">
+                <img src={item?.product?.imageCover || 'https://via.placeholder.com/150'} alt="product" className="w-full h-full object-contain mix-blend-multiply" />
+            </div>
+            
+            <div className="flex-1 flex flex-col">
+                <div className="pr-1">
+                    <span className="text-secondary font-semibold text-xs bg-secondary/10 px-2 py-1 rounded-md">{item?.product?.category?.name || 'الالكترونيات'}</span>
+                    <h3 className="text-lg font-bold text-gray-900 mt-2 mb-1 w-11/12 line-clamp-2">
+                        {item?.product?.title || 'آيفون XR بذاكرة سعة 128 جيجابايت'}
+                    </h3>
+                    <div className="flex items-center gap-2 mb-2">
+                        <span className="text-xs text-gray-500 font-medium">الماركة:</span>
+                        <span className="text-sm font-bold text-gray-800">{item?.product?.brand?.name || 'ابل'}</span>
+                    </div>
+                     <div className="flex items-center gap-2 mb-4">
+                        <span className="text-xs text-gray-500 font-medium">اللون:</span>
+                        <div
+                            className="w-4 h-4 rounded-full border border-gray-200"
+                            style={{ backgroundColor: item?.color || "#E52C2C" }}
+                        ></div>
+                    </div>
+                </div>
+                
+                <div className="mt-auto flex items-center justify-between border-t border-gray-100 pt-3">
+                    <div className="flex items-center gap-3 bg-gray-50 rounded-xl p-1 border border-gray-200">
+                        <button className="p-1 hover:bg-white rounded-lg transition-colors text-gray-600">
+                            <Plus size={16} />
+                        </button>
+                        <span className="font-bold text-gray-900 w-6 text-center">{item?.count || 1}</span>
+                        <button className="p-1 hover:bg-white rounded-lg transition-colors text-gray-600">
+                            <Minus size={16} />
+                        </button>
+                    </div>
+                    
+                    <div className="flex items-end gap-1">
+                        <span className="text-xl sm:text-2xl font-black text-gray-900">{item?.price || 3000}</span>
+                        <span className="text-xs font-bold text-gray-500 mb-1">ج.م</span>
+                    </div>
+                </div>
+            </div>
         </div>
-      </Col>
     )
 }
 
-export default CartItem
+export default CartItem;

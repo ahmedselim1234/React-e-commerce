@@ -1,24 +1,22 @@
-import { Container, Row } from "react-bootstrap";
 import SubTiltle from "../utility/subTitle";
 import ProductCard from "./ProductCard";
-import prod1 from "../../images/prod1.png";
-import prod2 from "../../images/mobile.png";
-import prod3 from "../../images/mobile1.png";
-import prod4 from "../../images/mobile2.png";
 
-const CartContainer = ({ title, btntitle, pathText }) => {
+const CartContainer = ({ title, btntitle, pathText, products = [] }) => {
   return (
- <>
-    <Container>
-      <SubTiltle title={title} btntitle={btntitle} pathText={pathText} />
-      <Row className="my-2 d-flex justify-content-between">
-        <ProductCard img={prod1} />
-        <ProductCard img={prod2} />
-        <ProductCard img={prod3} />
-        <ProductCard img={prod4} />
-      </Row>
-    </Container>
- </>
+    <section className="mb-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <SubTiltle title={title} btntitle={btntitle} pathText={pathText} />
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mt-6">
+            {products.length > 0 ? (
+                products.map((item, index) => (
+                    <ProductCard key={index} product={item} />
+                ))
+            ) : (
+                <div className="col-span-full text-center py-10 text-gray-500 font-medium">لا توجد منتجات حالياً</div>
+            )}
+        </div>
+      </div>
+    </section>
   );
 };
 

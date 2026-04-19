@@ -1,27 +1,23 @@
-
-import { Container, Row } from 'react-bootstrap';
 import SubTiltle from '../utility/subTitle';
 import CategoryCard from '../category/CategoryCard';
-import clothe from "../../images/clothe.png";
-import cat2 from "../../images/cat2.png";
-import labtop from "../../images/labtop.png";
-import sale from "../../images/sale.png";
-import pic from "../../images/pic.png";
+import { dummyCategories } from '../../data/dummyData';
 
 const HomeCategory = () => {
     return (
-        <Container>
-            <SubTiltle title="التصنيفات" btntitle="المزيد" pathText="/allcategory" />
-            <Row className='my-2 d-flex justify-content-between'>
-                <CategoryCard title="اجهزة منزلية" img={clothe} background="#F4DBA4" />
-                <CategoryCard title="اجهزة منزلية" img={cat2} background="#F4DBA4" />
-                <CategoryCard title="اجهزة منزلية" img={labtop} background="#0034FF" />
-                <CategoryCard title="اجهزة منزلية" img={sale} background="#F4DBA4" />
-                <CategoryCard title="اجهزة منزلية" img={clothe} background="#FF6262" />
-                <CategoryCard title="اجهزة منزلية" img={pic} background="#F4DBA4" />
-            </Row>
-        </Container>
+        <section className="bg-white/50 backdrop-blur-md py-4 my-8 rounded-3xl mx-4 sm:mx-6 lg:mx-8 border border-gray-100 shadow-sm">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <SubTiltle title="اكتشف التصنيفات" btntitle="عرض الكل" pathText="/allcategory" />
+                
+                <div className="flex overflow-x-auto pb-6 pt-2 gap-4 snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] md:justify-center">
+                    {dummyCategories.map((cat, index) => (
+                        <div key={index} className="snap-center">
+                            <CategoryCard title={cat.name} img={cat.image} />
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
     )
 }
 
-export default HomeCategory
+export default HomeCategory;

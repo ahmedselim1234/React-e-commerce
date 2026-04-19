@@ -1,35 +1,27 @@
-
 import "react-image-gallery/styles/css/image-gallery.css";
 import ImageGallery from "react-image-gallery";
-import mobile from '../../images/mobile.png'
-import LeftButton from './LeftButton';
-import RightButton from './RightButton';
+import { dummyProducts } from "../../data/dummyData";
+
 const ProductGallery = () => {
-    const images = [
-        {
-            original: `${mobile}`,
-        },
-        {
-            original: `${mobile}`,
-        },
-        {
-            original: `${mobile}`,
-        },
-    ];
+    const product = dummyProducts[0];
+    const images = product?.images?.map(img => ({
+        original: img,
+        thumbnail: img
+    })) || [{ original: 'https://via.placeholder.com/600', thumbnail: 'https://via.placeholder.com/150' }];
+
     return (
-        <div className="product-gallary-card d-flex justfiy-content-center  align-items-center
-        pt-2">
-            <ImageGallery items={images}
-                defaultImage={mobile}
-                showFullscreenButton={false}
-                isRTL={true}
+        <div className="bg-white rounded-3xl p-4 border border-gray-50 h-full flex flex-col justify-center items-center">
+            <ImageGallery 
+                items={images}
+                showFullscreenButton={true}
                 showPlayButton={false}
-                showThumbnails={false}
-                renderRightNav={RightButton}
-                renderLeftNav={LeftButton}
+                isRTL={true}
+                showThumbnails={images.length > 1}
+                slideDuration={300}
+                showNav={images.length > 1}
             />
         </div>
     )
 }
 
-export default ProductGallery
+export default ProductGallery;

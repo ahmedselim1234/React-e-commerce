@@ -1,27 +1,21 @@
-
-import { Container,Row ,Col} from 'react-bootstrap'
+import { dummyCategories } from "../../data/dummyData";
 
 const CategoryHeader = () => {
     return (
-        <div className="cat-header">
-      <Container>
-        <Row>
-          <Col className="d-flex justify-content-start py-2 flex-wrap">
-            <div className="cat-text-header ">الكل</div>
-            <div className="cat-text-header">الكترونيات</div>
-            <div className="cat-text-header">ملابس</div>
-            <div className="cat-text-header"> كهربيه</div>
-            <div className="cat-text-header">تخفيضات</div>
-            <div className="cat-text-header">تخفيضات</div>
-            <div className="cat-text-header">تخفيضات</div>
-            <div className="cat-text-header">تخفيضات</div>
-            <div className="cat-text-header">تخفيضات</div>
-            <div className="cat-text-header">المزيد</div>
-          </Col>
-        </Row>
-      </Container>
-    </div>
+        <div className="bg-white border-b border-gray-100 py-3 shadow-sm" dir="rtl">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex items-center gap-8 overflow-x-auto hide-scrollbar whitespace-nowrap text-sm font-semibold text-gray-500">
+                    <div className="hover:text-primary cursor-pointer transition-colors text-primary border-b-2 border-primary pb-1">الكل</div>
+                    {dummyCategories.map((cat, index) => (
+                        <div key={index} className="hover:text-primary cursor-pointer transition-colors pb-1">
+                            {cat.name}
+                        </div>
+                    ))}
+                    <div className="hover:text-primary cursor-pointer transition-colors pb-1">المزيد</div>
+                </div>
+            </div>
+        </div>
     )
 }
 
-export default CategoryHeader
+export default CategoryHeader;
